@@ -102,12 +102,12 @@ for k in stats_r:
 	suf = ""
 
 	if sort == TIME:
-		tot_prc += prc
 		if not half and tot_prc >= 50:
 			half = True
-			suf = " <- 50%"
+			suf = " <- %3.1f%%" % (100. - tot_prc)
 		if not quat and tot_prc >= 25:
 			quat = True
-			suf = " <- 75%"
+			suf = " <- %3.1f%%" % (100. - tot_prc)
 
 	print "%20s: %8d  %f (%3.1f%%)%8s" % (k[0], k[1], k[2], prc, suf)
+	tot_prc += prc
