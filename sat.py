@@ -17,7 +17,7 @@
 
 import sys
 
-raw = 0
+raw = False
 
 NONE = 0
 COUNT = 1
@@ -27,12 +27,10 @@ sort = NONE
 
 if len(sys.argv) >= 2:
 	if sys.argv[1] == "-r":
-		raw = 1
+		raw = True
 	elif sys.argv[1] == "-c":
-		raw = 1
 		sort = COUNT
 	elif sys.argv[1] == "-t":
-		raw = 1
 		sort = TIME
 
 data = sys.stdin.readlines()
@@ -89,13 +87,27 @@ for ln in data:
 
 	tot = (tot[0] + 1, tot[1] + time)
 
-if not raw:
-	print "Total"
-
 stats_r = map(lambda i: (i, stats[i][0], stats[i][1]), stats)
 if sort != NONE:
 	stats_r.sort(key=lambda t: t[sort])
 
-stats_r.append(("Total", tot[0], tot[1]))
+if not raw:
+	stats_r.append(("Total", tot[0], tot[1]))
+
+tot_prc = 0
+half = False
+quat = False
 for k in stats_r:
-	print "%16s: %8d  %f (%2.1f%%)" % (k[0], k[1], k[2], k[2] * 100. / tot[1])
+	prc = k[2] * 100. / tot[1]
+	suf = ""
+
+	if sort == TIME:
+		tot_prc += prc
+		if not half and tot_prc >= 50:
+			half = True
+			suf = " <- 50%"
+		if not quat and tot_prc >= 25:
+			quat = True
+			suf = " <- 75%"
+
+	print "%20s: %8d  %f (%3.1f%%)%8s" % (k[0], k[1], k[2], prc, suf)
