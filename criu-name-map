@@ -11,4 +11,5 @@ sed -e 's/gorcunov@gmail.com/gorcunov@openvz.org/' \
    -e 's/Viktor/Victor/' \
    -e 's/VDavydov/vdavydov/' \
    -e 's/gbellack /Garrison Bellack /' \
-   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@openvz.org>/'
+   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@openvz.org>/' \
+   -e "s/Mark O'Neill/Mark A. O'Neill/"
