@@ -45,19 +45,19 @@ for ln in data:
 
 	try:
 		sysc_l = ln.split(" ", 1)[1]
-		if sysc_l.startswith(" <..."):
+		if sysc_l.startswith("<..."):
 			# Resume: " <... open resumed"
-			sysc = sysc_l.split(" ", 3)[2]
+			sysc = sysc_l.split(" ", 3)[1]
 		else:
 			# Call: "open(..."
 			sysc = sysc_l.split("(", 1)[0]
-			if sysc.startswith(" ---"):
+			if sysc.startswith("---"):
 				# Signals
 				continue
-			if sysc.startswith(" +++"):
+			if sysc.startswith("+++"):
 				# Exits
 				continue
-			if sysc.startswith(" exit"):
+			if sysc.startswith("exit"):
 				# Doesn't matter
 				continue
 	except IndexError:
