@@ -1,5 +1,6 @@
 sed -e 's/gorcunov@gmail.com/gorcunov@openvz.org/' \
    -e 's/parallels.com/openvz.org/' \
+   -e 's/openvz.org/odin.com/' \
    -e 's/Kinsbursky Stanislav/Stanislav Kinsbursky/' \
    -e 's/Andrew V/Andrey V/' \
    -e 's/avagin@gmail.com/avagin@openvz.org/' \
