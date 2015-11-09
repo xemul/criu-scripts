@@ -43,43 +43,35 @@ for ln in data:
 		# No per-pid stuff
 		ln = "1  " + ln
 
-	try:
-		sysc_l = ln.split(" ", 1)[1]
-		if sysc_l.startswith("<..."):
-			# Resume: " <... open resumed"
-			sysc = sysc_l.split(" ", 3)[1]
-		else:
-			# Call: "open(..."
-			sysc = sysc_l.split("(", 1)[0]
-			if sysc.startswith("---"):
-				# Signals
-				continue
-			if sysc.startswith("+++"):
-				# Exits
-				continue
-			if sysc.startswith("exit"):
-				# Doesn't matter
-				continue
-	except IndexError:
-		print "No syscall name in [%s]" % ln
-		raise(Exception())
+	# Typicall line looks like
+	# pid syscall(argument) = result <time>
 
 	try:
-		time_s = ln.rsplit("<", 1)[1].strip(">")
-		if time_s.startswith("unfinished"):
-			# Concurrent processes
+		sysc = ln.split(' ', 1)[1].strip()
+		if sysc.startswith('---'):
 			continue
-	except IndexError:
-		print "No times in [%s] -> [%s]" % (ln, sysc)
-		raise(Exception())
+		if sysc.startswith('+++'):
+			continue
+		if sysc.startswith('exit'):
+			continue
+		if sysc.startswith('<...'):
+			# Special 'resumed' line
+			sysc = sysc[5:].split(' ', 1)[0]
+		else:
+			sysc = sysc.split('(', 1)[0]
 
-	try:
-		time = float(time_s)
-	except ValueError:
-		print "Time is bad in [%s] -> [%s] [%s]" % (ln, sysc, time_s)
-		raise(Exception())
+		time = ln.rsplit(' ', 1)[1].strip().strip('<>')
+		if time.startswith('...'):
+			continue
 
-	sysc = sysc.strip()
+		time = float(time)
+	except:
+		print "Error converting line [%s]" % ln
+		sys.exit(1)
+
+	# sysc -- syscall name
+	# time -- time taken
+
 	if not stats.has_key(sysc):
 		stats[sysc] = (1, time)
 	else:
