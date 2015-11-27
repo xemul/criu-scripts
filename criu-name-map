@@ -5,7 +5,7 @@ sed -e 's/gorcunov@gmail.com/gorcunov@openvz.org/' \
    -e 's/virtuozzo.com/odin.com/' \
    -e 's/Kinsbursky Stanislav/Stanislav Kinsbursky/' \
    -e 's/Andrew V/Andrey V/' \
-   -e 's/avagin@gmail.com/avagin@odin.org/' \
+   -e 's/avagin@gmail.com/avagin@odin.com/' \
    -e 's/<libo.chen/<clbchenlibo.chen/' \
    -e 's/Tikhomirov Pavel/Pavel Tikhomirov/' \
    -e 's/Huang Qiang/Qiang Huang/' \
@@ -14,5 +14,5 @@ sed -e 's/gorcunov@gmail.com/gorcunov@openvz.org/' \
    -e 's/Viktor/Victor/' \
    -e 's/VDavydov/vdavydov/' \
    -e 's/gbellack /Garrison Bellack /' \
-   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@odin.org>/' \
+   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@odin.com>/' \
    -e "s/Mark O'Neill/Mark A. O'Neill/"
