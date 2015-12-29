@@ -1,18 +1,25 @@
-sed -e 's/gorcunov@gmail.com/gorcunov@openvz.org/' \
-   -e 's/parallels.com/openvz.org/' \
-   -e 's/openvz.org/odin.com/' \
-   -e 's/virtuozzo.org/odin.com/' \
-   -e 's/virtuozzo.com/odin.com/' \
+sed \
+   -e 's/parallels.com/virtuozzo.org/' \
+   -e 's/openvz.org/virtuozzo.org/' \
+   -e 's/virtuozzo.com/virtuozzo.org/' \
+   -e 's/odin.com/virtuozzo.org/' \
    -e 's/Kinsbursky Stanislav/Stanislav Kinsbursky/' \
-   -e 's/Andrew V/Andrey V/' \
-   -e 's/avagin@gmail.com/avagin@odin.com/' \
+   -e 's/Stanislav Kinsburskiy/Stanislav Kinsbursky/' \
+   -e 's/Andre[wi] V/Andrey V/' \
+   -e 's/avagin@gmail.com/avagin@virtuozzo.org/' \
+   -e 's/gorcunov@gmail.com/gorcunov@virtuozzo.org/' \
    -e 's/<libo.chen/<clbchenlibo.chen/' \
    -e 's/Tikhomirov Pavel/Pavel Tikhomirov/' \
+   -e 's/snorcht@gmail.com/ptikhomirov@virtuozzo.org/' \
    -e 's/Huang Qiang/Qiang Huang/' \
    -e 's/Kupreev Руслан/Kuprieiev/' \
    -e 's/vkonyashkin </Victor Konyashkin </' \
    -e 's/Viktor/Victor/' \
    -e 's/VDavydov/vdavydov/' \
    -e 's/gbellack /Garrison Bellack /' \
-   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@odin.com>/' \
+   -e 's/Pavel <arsbum@mail.ru>/Pavel Emelyanov <xemul@virtuozzo.org>/' \
+   -e 's/kupruser@gmail.com/rkuprieiev@cloudlinux.com/' \
+   -e 's/artem.kuzmitskiy@gmail.com/artem.kuzmitskiy@lge.com/' \
+   -e 's/adrian@lisas.de/areber@redhat.com/' \
+   -e 's/tycho@tycho.ws/tycho.andersen@canonical.com/' \
    -e "s/Mark O'Neill/Mark A. O'Neill/"
