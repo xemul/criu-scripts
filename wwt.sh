@@ -44,6 +44,6 @@ done
 
 echo "              Lines added           Commits   Who"
 
-git log --pretty=short --shortstat --no-merges $@ | \
+git log --pretty=short --shortstat -M --no-merges $@ | \
 		 sh ${DIR}/criu-name-map | ${DIR}/wwt.py $wwtarg | \
 		 sort $sortag | $headcmd | nl
