@@ -33,7 +33,7 @@ def files_in(d, ext):
 
 
 
-def scan(p, seen_set, bad_set, dep = 0):
+def scan(p, seen_set, bad_set, dep = 0, c_path = []):
 	print ' ' * dep + '%s' % p
 	incs = file_includes(p)
 	if not incs:
@@ -44,7 +44,8 @@ def scan(p, seen_set, bad_set, dep = 0):
 	# Headers, that don't include other headers are
 	# OK to be looped into. But those, that continue
 	# the inclustion chain shouldn't meet any longer
-	seen_set.add(p)
+	c_path.append(p)
+	seen_set[p] = ' -> '.join(c_path)
 
 	print ' ' * dep + '-->'
 	for i in incs:
@@ -55,20 +56,26 @@ def scan(p, seen_set, bad_set, dep = 0):
 			continue
 
 		p = d + '/' + i
-		if p in seen_set:
+		if seen_set.has_key(p):
 			print ' ' * dep + '! Already seen %s' % p
-			bad_set.add(p)
+			if not bad_set.has_key(p):
+				bad_set[p] = [ seen_set[p] ]
+			bad_set[p].append(' -> '.join(c_path))
 
-		scan(p, seen_set, bad_set, dep + 4)
+		scan(p, seen_set, bad_set, dep + 4, c_path)
 
 	print ' ' * dep + '<--'
+	c_path.pop()
 
 
-bad_set = set()
+bad_set = {}
 for f in files_in(sdir, '.h'):
-	seen_set = set()
+	seen_set = {}
 	scan(sdir + '/' + f, seen_set, bad_set)
 
 print 'Loopy headers:'
 for i in bad_set:
-	print '  %s' % i
+	pl = bad_set[i]
+	print '  %s (%d)' % (i, len(pl))
+	for p in pl:
+		print '           %s' % p
