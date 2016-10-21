@@ -76,6 +76,6 @@ for f in files_in(sdir, '.h'):
 print 'Loopy headers:'
 for i in bad_set:
 	pl = bad_set[i]
-	print '  %s (%d)' % (i, len(pl))
+	print ' H %s (%d)' % (i, len(pl))
 	for p in pl:
 		print '           %s' % p
