@@ -16,13 +16,15 @@
  */
 
 #include <errno.h>
+#include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 int main(int argc, char *argv[])
 {
-	FILE *fp;
+	int fd, err;
 
 	if (argc < 3) {
 		printf("Typical usage: %s logfile -- program [args...] &\n",
@@ -30,17 +32,23 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	fp = fopen(argv[1], "w");
-	if (fp == NULL) {
+	fd = open(argv[1], O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	if (fd < 0) {
 		printf("Error opening %s.\n", argv[1]);
 		return errno;
 	}
 
 	/* Set session ID to make process easily `criu dump`-able */
 	setsid();
-	fprintf(fp, "Stopping pid %d before exec().\n", getpid());
-	fclose(fp);
+	dprintf(fd, "Stopping pid %d before exec().\n", getpid());
 	raise(SIGSTOP);
 
-	return execvp(argv[3], &argv[3]);
+	/* Run application */
+	execvp(argv[3], &argv[3]);
+	err = errno;
+
+	/* Log and return error if execvp failed */
+	dprintf(fd, "Error executing binary: %s (errno: %d)\n", strerror(err), err);
+	close(fd);
+	return err;
 }
